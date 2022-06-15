@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: content-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: content
+  template:
+    metadata:
+      labels:
+        app: content
+    spec:
+      containers:
+        - name: content
+          image: salesjoep/content-ms:v1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: content-srv
+spec:
+  selector:
+    app: content
+  ports:
+    - name: content
+      protocol: TCP
+      port: 3002
+      targetPort: 3002
